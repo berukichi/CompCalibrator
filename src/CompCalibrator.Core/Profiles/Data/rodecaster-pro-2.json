@@ -1,0 +1,34 @@
+{
+  "id": "rodecaster-pro-2",
+  "name": "RØDECaster Pro II / Duo",
+  "maker": "RØDE",
+  "software": "本体 / RØDE Central",
+  "captureHint": "測定中はチャンネルの Processing を OFF にしてください。",
+  "modes": [
+    {
+      "id": "advanced",
+      "label": "ADVANCED EDITOR / COMPRESSOR",
+      "kind": "parametric",
+      "note": "VoxLab の下の Advanced から開く編集画面です。比率の上限 4.5:1 以外の可動域は確認できていません。項目名も実機の表示に読み替えて、最も近い値に合わせてください。",
+      "parameters": [
+        {"role": "threshold", "label": "THRESHOLD", "unit": "dB", "min": -60, "max": 0, "step": 0.5, "confidence": "unverified"},
+        {"role": "ratio", "label": "RATIO", "unit": ":1", "min": 1, "max": 4.5, "step": 0.1, "confidence": "inferred", "note": "上限は Sound On Sound のレビューによります。"},
+        {"role": "attack", "label": "ATTACK", "unit": "ms", "min": 0.1, "max": 200, "step": 0.1, "confidence": "unverified"},
+        {"role": "release", "label": "RELEASE", "unit": "ms", "min": 10, "max": 2000, "step": 1, "confidence": "unverified"},
+        {"role": "makeup", "label": "GAIN", "unit": "dB", "min": 0, "max": 24, "step": 0.5, "plus": true, "confidence": "unverified"}
+      ]
+    },
+    {
+      "id": "voxlab",
+      "label": "VOXLAB / PUNCH",
+      "kind": "macro",
+      "note": "VoxLab の Punch はコンプレッサーとノイズゲートをまとめて動かす 1 つのつまみです。つまみの数値と内部値の関係は非公開のため、ゲインリダクションの目標を示します。",
+      "macroControl": "Punch"
+    }
+  ],
+  "sources": [
+    {"title": "RØDECaster Pro II ユーザーガイド: オンボードプロセッシング", "url": "https://rode.com/ja-jp/user-guides/rodecaster-pro-ii/how-to-use-the-on-board-processing"},
+    {"title": "RØDECaster Duo ユーザーガイド: オンボードプロセッシング", "url": "https://rode.com/ja-jp/user-guides/rodecaster-duo/using-the-on-board-processing"},
+    {"title": "Sound On Sound: Rode RodeCaster Pro II", "url": "https://www.soundonsound.com/reviews/rode-rodecaster-pro-ii"}
+  ]
+}

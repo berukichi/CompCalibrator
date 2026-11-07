@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <RootNamespace>CompCalibrator.App</RootNamespace>
+    <AssemblyName>CompCalibrator</AssemblyName>
+    <DefaultLanguage>ja-JP</DefaultLanguage>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <!-- 開発中はパッケージなしで動かす。BuildMsix=true で MSIX を作る(scripts\build-msix.ps1)。 -->
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsPackageType Condition="'$(BuildMsix)' == 'true'">MSIX</WindowsPackageType>
+    <!-- 配布先に .NET 8 がなくても動くよう、MSIX にはランタイムも入れる。 -->
+    <SelfContained Condition="'$(BuildMsix)' == 'true'">true</SelfContained>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
+    <AppxBundle>Never</AppxBundle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" Condition="'$(BuildMsix)' == 'true'" />
+    <Content Include="Assets\**" />
+    <Content Include="THIRD-PARTY-NOTICES.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.4.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CompCalibrator.Core\CompCalibrator.Core.csproj" />
+  </ItemGroup>
+</Project>

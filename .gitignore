@@ -1,0 +1,20 @@
+## .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.rsuser
+
+## MSIX packaging output
+AppPackages/
+BundleArtifacts/
+dist/
+*.msix
+*.msixbundle
+*.msixupload
+*.appx
+*.appxbundle
+*.appxsym
+*.cer
+*.pfx

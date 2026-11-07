@@ -1,0 +1,27 @@
+{
+  "id": "ag-mk2",
+  "name": "AG03MK2 / AG06MK2 / AG03 / AG06 / AG01",
+  "maker": "Yamaha",
+  "software": "AG Controller",
+  "captureHint": "測定中は AG Controller の COMP を OFF にしてください。",
+  "modes": [
+    {
+      "id": "detail",
+      "label": "AG CONTROLLER / DETAIL",
+      "kind": "parametric",
+      "note": "AG Controller を Detail モードに切り替えて COMP を ON にすると表示される項目です。項目名と RATIO の両端は Yamaha の FAQ で確認しましたが、それ以外の可動域は未確認の仮置きです。実機の表示で最も近い値に合わせてください。",
+      "parameters": [
+        {"role": "threshold", "label": "THRESH", "unit": "dB", "min": -60, "max": 0, "step": 1, "confidence": "unverified"},
+        {"role": "ratio", "label": "RATIO", "unit": ":1", "min": 1.1, "max": 20, "step": 0.1, "confidence": "inferred", "note": "最小 1.1 と最大 INF は Yamaha の FAQ で確認。途中の刻みと上限付近は未確認です。"},
+        {"role": "attack", "label": "ATTACK", "unit": "ms", "min": 1, "max": 200, "step": 1, "confidence": "unverified"},
+        {"role": "release", "label": "RELEASE", "unit": "ms", "min": 10, "max": 2000, "step": 1, "confidence": "unverified"},
+        {"role": "makeup", "label": "GAIN", "unit": "dB", "min": 0, "max": 24, "step": 1, "plus": true, "confidence": "unverified"}
+      ]
+    }
+  ],
+  "sources": [
+    {"title": "Yamaha FAQ: AG Controller で調整する COMP の各パラメーター", "url": "https://faq.yamaha.com/jp/s/article/000024406"},
+    {"title": "AG03MK2 AG06MK2 オンラインマニュアル", "url": "https://manual.yamaha.com/pa/live_streaming/ag03_06/ja-JP/8429860875.html"},
+    {"title": "Sound On Sound: Yamaha AG06 & AG03", "url": "https://www.soundonsound.com/reviews/yamaha-ag06-ag03"}
+  ]
+}

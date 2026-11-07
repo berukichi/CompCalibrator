@@ -1,0 +1,34 @@
+{
+  "id": "revelator-io24",
+  "name": "Revelator io24 / io44",
+  "maker": "PreSonus",
+  "software": "Universal Control",
+  "captureHint": "測定中は Fat Channel の Compressor を OFF にしてください。",
+  "modes": [
+    {
+      "id": "standard",
+      "label": "FAT CHANNEL / STANDARD COMPRESSOR",
+      "kind": "parametric",
+      "note": "Fat Channel の Advanced で選べる Standard モデルです。Auto を使うとアタック 10ms、リリース 150ms に固定されます。項目はマニュアルで確認しましたが、可動域の数値は載っていないため仮置きです。実機の表示で最も近い値に合わせてください。",
+      "parameters": [
+        {"role": "threshold", "label": "THRESHOLD", "unit": "dB", "min": -60, "max": 0, "step": 0.5, "confidence": "unverified"},
+        {"role": "ratio", "label": "RATIO", "unit": ":1", "min": 1, "max": 20, "step": 0.1, "confidence": "unverified"},
+        {"role": "attack", "label": "ATTACK", "unit": "ms", "min": 0.1, "max": 200, "step": 0.1, "confidence": "unverified"},
+        {"role": "release", "label": "RELEASE", "unit": "ms", "min": 10, "max": 2000, "step": 1, "confidence": "unverified"},
+        {"role": "makeup", "label": "GAIN", "unit": "dB", "min": 0, "max": 24, "step": 0.5, "plus": true, "confidence": "unverified"},
+        {"role": "lowCut", "label": "HIGH PASS FILTER", "unit": "Hz", "min": 24, "max": 1000, "step": 1, "confidence": "verified", "note": "範囲はマニュアルの値です。最小の 24Hz は OFF を意味します。"}
+      ]
+    },
+    {
+      "id": "tube",
+      "label": "FAT CHANNEL / TUBE LEVELING AMPLIFIER",
+      "kind": "macro",
+      "note": "Gain と Peak Reduction の 2 操作です。比率は入力に応じて 1:1〜10:1 で変わるため、ゲインリダクションの目標を示します。",
+      "macroControl": "Peak Reduction"
+    }
+  ],
+  "sources": [
+    {"title": "Revelator io44 Owner's Manual", "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777700303_Revelator-io44_EN.pdf"},
+    {"title": "Revelator io24 Owner's Manual (ManualsLib)", "url": "https://www.manualslib.com/manual/2471747/Presonus-Revelator-Io24.html?page=72"}
+  ]
+}

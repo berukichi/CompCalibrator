@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Company>berukichi</Company>
+    <Product>Comp Calibrator</Product>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+</Project>

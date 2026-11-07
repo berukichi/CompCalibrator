@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="ARM64" />
+  </Configurations>
+  <Folder Name="/src/">
+    <Project Path="src/CompCalibrator.Core/CompCalibrator.Core.csproj" />
+    <Project Path="src/CompCalibrator.App/CompCalibrator.App.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CompCalibrator.Tests/CompCalibrator.Tests.csproj" />
+  </Folder>
+</Solution>

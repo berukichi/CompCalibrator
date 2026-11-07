@@ -1,0 +1,26 @@
+{
+  "id": "wave-link",
+  "name": "Wave Link Compressor (Wave XLR など)",
+  "maker": "Elgato",
+  "software": "Wave Link",
+  "captureHint": "測定中は Compressor エフェクトを OFF にしてください。",
+  "modes": [
+    {
+      "id": "advanced",
+      "label": "COMPRESSOR / ADVANCED",
+      "kind": "parametric",
+      "note": "項目構成は Elgato の説明によります。数値の可動域は確認できていません。実機の表示で最も近い値に合わせてください。",
+      "parameters": [
+        {"role": "threshold", "label": "THRESHOLD", "unit": "dB", "min": -60, "max": 0, "step": 0.5, "confidence": "unverified"},
+        {"role": "ratio", "label": "RATIO", "unit": ":1", "min": 1, "max": 20, "step": 0.1, "confidence": "unverified"},
+        {"role": "attack", "label": "ATTACK", "unit": "ms", "min": 1, "max": 200, "step": 1, "confidence": "unverified"},
+        {"role": "release", "label": "RELEASE", "unit": "ms", "min": 10, "max": 2000, "step": 1, "confidence": "unverified"},
+        {"role": "makeup", "label": "MAKE-UP GAIN", "unit": "dB", "min": 0, "max": 24, "step": 0.5, "plus": true, "confidence": "unverified"}
+      ]
+    }
+  ],
+  "sources": [
+    {"title": "What is an Audio Compressor (Elgato)", "url": "https://www.elgato.com/us/en/explorer/products/wave/what-is-a-compressor/"},
+    {"title": "Elgato Wave XLR Quick Start Guide", "url": "https://d32bbxx72p2025.cloudfront.net/documents/Elgato_Wave_XLR_-_Quick_Start_Guide.pdf"}
+  ]
+}

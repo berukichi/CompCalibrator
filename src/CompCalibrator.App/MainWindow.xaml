@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CompCalibrator.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Comp Calibrator">
+
+    <Grid x:Name="Root" Background="{StaticResource BgBrush}">
+        <Canvas x:Name="GridLayer" IsHitTestVisible="False" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- タイトルバー -->
+            <Grid x:Name="TitleBarArea" Padding="32,0,150,0" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Ellipse x:Name="LiveDot" Width="8" Height="8" Fill="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="COMP CALIBRATOR" VerticalAlignment="Center"
+                           Style="{StaticResource Label}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource InkBrush}" />
+                <TextBlock x:Name="StatusText" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"
+                           Style="{StaticResource Label}" TextTrimming="CharacterEllipsis" />
+            </Grid>
+
+            <!-- HorizontalScrollBarVisibility を Disabled にしないと、中身の幅が無制限で計算される。 -->
+            <ScrollViewer x:Name="Scroller" Grid.Row="1" HorizontalScrollMode="Disabled"
+                          HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ZoomMode="Disabled">
+                <!-- ScrollViewer の直下は常に全幅にして、本文の中央寄せはこの Grid の中で行う。 -->
+                <Grid>
+                <StackPanel MaxWidth="1180" Padding="32,0,32,48">
+                    <Rectangle Height="1" Fill="{StaticResource InkBrush}" />
+
+                    <!-- 01 TARGET -->
+                    <Grid Style="{StaticResource SectionRow}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="01" Style="{StaticResource SectionId}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Column="1" Spacing="16">
+                            <TextBlock Text="機器を選ぶ" Style="{StaticResource SectionTitle}" />
+                            <Grid ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="DEVICE" Style="{StaticResource Label}" />
+                                    <ComboBox x:Name="DeviceBox" SelectionChanged="OnDeviceChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="6">
+                                    <TextBlock Text="COMPRESSOR" Style="{StaticResource Label}" />
+                                    <ComboBox x:Name="ModeBox" SelectionChanged="OnModeChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Spacing="6">
+                                    <TextBlock Text="MIC INPUT" Style="{StaticResource Label}" />
+                                    <ComboBox x:Name="InputBox" SelectionChanged="OnInputChanged" />
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="STYLE" Style="{StaticResource Label}" />
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Button x:Name="NaturalButton" Content="自然 — 抑揚を残す" Style="{StaticResource IndexButton}" Click="OnStyleClick" Tag="Natural" />
+                                    <Button x:Name="BalancedButton" Content="標準 — 配信向け" Style="{StaticResource IndexButton}" Click="OnStyleClick" Tag="Balanced" />
+                                    <Button x:Name="TightButton" Content="強め — 叫ぶ実況" Style="{StaticResource IndexButton}" Click="OnStyleClick" Tag="Tight" />
+                                </StackPanel>
+                            </StackPanel>
+                            <TextBlock x:Name="ModeNoteText" Style="{StaticResource Small}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 02 CAPTURE -->
+                    <Grid Style="{StaticResource SectionRow}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="02" Style="{StaticResource SectionId}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Column="1" Spacing="14">
+                            <TextBlock Text="声を測る" Style="{StaticResource SectionTitle}" />
+                            <TextBlock x:Name="CaptureHintText" Style="{StaticResource Body}" />
+
+                            <Grid ColumnSpacing="14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="110" />
+                                </Grid.ColumnDefinitions>
+                                <!-- メーターは毎フレーム動くので、レイアウトに触らない RenderTransform で描く。 -->
+                                <Grid x:Name="MeterTrack" Height="18" Background="{StaticResource PanelBrush}"
+                                      BorderBrush="{StaticResource GridBrush}" BorderThickness="1">
+                                    <Rectangle Fill="{StaticResource LimeBrush}" RenderTransformOrigin="0,0.5">
+                                        <Rectangle.RenderTransform>
+                                            <ScaleTransform x:Name="MeterFillScale" ScaleX="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
+                                    <Rectangle HorizontalAlignment="Left" Width="2" Fill="{StaticResource InkBrush}">
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform x:Name="MeterPeakShift" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
+                                </Grid>
+                                <TextBlock x:Name="MeterText" Grid.Column="1" Text="-- dBFS" Style="{StaticResource Body}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <Border x:Name="PromptPanel" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource GridBrush}"
+                                    BorderThickness="1" Padding="18,14" Visibility="Collapsed">
+                                <StackPanel Spacing="8">
+                                    <TextBlock x:Name="PromptTitle" Style="{StaticResource SectionTitle}" FontSize="24" Foreground="{StaticResource LimeBrush}" />
+                                    <TextBlock x:Name="PromptBody" Style="{StaticResource Body}" />
+                                    <ProgressBar x:Name="CaptureProgress" Maximum="1" Height="3" CornerRadius="0" Background="{StaticResource GridBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button x:Name="MeasureButton" Content="測定を開始(22 秒)" Style="{StaticResource PrimaryButton}" Click="OnMeasureClick" />
+                                <Button x:Name="CancelButton" Content="中止" Style="{StaticResource IndexButton}" Click="OnCancelClick" Visibility="Collapsed" />
+                            </StackPanel>
+                            <StackPanel x:Name="WarningPanel" Spacing="6" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 03 VOICE -->
+                    <Grid x:Name="VoiceSection" Style="{StaticResource SectionRow}" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="03" Style="{StaticResource SectionId}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Column="1" Spacing="16">
+                            <TextBlock Text="声の特徴" Style="{StaticResource SectionTitle}" />
+                            <TextBlock x:Name="VoiceSummaryText" Style="{StaticResource Body}" />
+                            <Grid ColumnSpacing="28">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel x:Name="MetricsPanel" Spacing="0" />
+                                <StackPanel Grid.Column="1" Spacing="6">
+                                    <TextBlock Text="SPECTRUM / F1 F2 F3" Style="{StaticResource Label}" />
+                                    <Canvas x:Name="SpectrumCanvas" Height="262" Background="{StaticResource PanelBrush}" SizeChanged="OnChartSizeChanged" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 04 SETTINGS -->
+                    <Grid x:Name="SettingsSection" Style="{StaticResource SectionRow}" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="04" Style="{StaticResource SectionId}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Column="1" Spacing="16">
+                            <TextBlock Text="推奨設定" Style="{StaticResource SectionTitle}" />
+                            <TextBlock x:Name="ResultModeText" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="MacroText" Style="{StaticResource Body}" Foreground="{StaticResource InkBrush}" Visibility="Collapsed" />
+                            <StackPanel x:Name="SettingsPanel" />
+                            <StackPanel x:Name="RelatedPanel" Visibility="Collapsed">
+                                <TextBlock Text="RELATED" Style="{StaticResource Label}" Margin="0,8,0,8" />
+                            </StackPanel>
+
+                            <Grid ColumnSpacing="28">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="280" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="TRANSFER" Style="{StaticResource Label}" />
+                                    <Canvas x:Name="TransferCanvas" Height="220" Background="{StaticResource PanelBrush}" SizeChanged="OnChartSizeChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="6">
+                                    <TextBlock Text="GAIN REDUCTION" Style="{StaticResource Label}" />
+                                    <Canvas x:Name="ReductionCanvas" Height="220" Background="{StaticResource PanelBrush}" SizeChanged="OnChartSizeChanged" />
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel x:Name="OutcomePanel" Orientation="Horizontal" Spacing="32" />
+                            <StackPanel x:Name="NotesPanel" Spacing="6" />
+
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button x:Name="PlayBeforeButton" Content="▶ 元の音" Style="{StaticResource IndexButton}" Click="OnPlayBefore" />
+                                <Button x:Name="PlayAfterButton" Content="▶ コンプ後" Style="{StaticResource IndexButton}" Click="OnPlayAfter" />
+                                <Button x:Name="StopButton" Content="■ 停止" Style="{StaticResource IndexButton}" Click="OnStopPlayback" />
+                                <Button x:Name="CopyButton" Content="値をコピー" Style="{StaticResource IndexButton}" Click="OnCopy" />
+                            </StackPanel>
+                            <TextBlock Text="試聴はアプリ内の計算による再現です。実機の音そのものではありません。" Style="{StaticResource Small}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 05 VERIFY -->
+                    <Grid x:Name="VerifySection" Style="{StaticResource SectionRow}" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="46" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="05" Style="{StaticResource SectionId}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Column="1" Spacing="14">
+                            <TextBlock Text="実機で確かめる" Style="{StaticResource SectionTitle}" />
+                            <TextBlock Style="{StaticResource Body}"
+                                       Text="上の値を実機に入れて、コンプレッサーを ON にしてから測り直します。予測との差を見て、スレッショルドとゲインを補正します。" />
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button x:Name="VerifyButton" Content="コンプ ON で確認(22 秒)" Style="{StaticResource PrimaryButton}" Click="OnVerifyClick" />
+                                <Button x:Name="ApplyButton" Content="補正値を反映" Style="{StaticResource IndexButton}" Click="OnApplyCorrection" Visibility="Collapsed" />
+                            </StackPanel>
+                            <TextBlock x:Name="VerifyVerdict" Style="{StaticResource Body}" Foreground="{StaticResource InkBrush}" Visibility="Collapsed" />
+                            <StackPanel x:Name="VerifyPanel" Orientation="Horizontal" Spacing="32" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- PROFILE -->
+                    <StackPanel Padding="70,24,0,0" Spacing="8">
+                        <TextBlock Text="PROFILE SOURCES" Style="{StaticResource Label}" />
+                        <StackPanel x:Name="SourcesPanel" Spacing="4" />
+                        <Button Content="プロファイルのフォルダーを開く" Style="{StaticResource IndexButton}" Click="OnOpenProfiles" Margin="0,6,0,0" />
+                    </StackPanel>
+                </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

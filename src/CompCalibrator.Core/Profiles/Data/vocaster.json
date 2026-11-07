@@ -1,0 +1,27 @@
+{
+  "id": "vocaster",
+  "name": "Vocaster One / Two",
+  "maker": "Focusrite",
+  "software": "Vocaster Hub",
+  "captureHint": "測定中は Enhance を OFF にしてください。Auto Gain を先に済ませると、レベルが安定します。",
+  "modes": [
+    {
+      "id": "enhance",
+      "label": "ENHANCE / EDIT",
+      "kind": "parametric",
+      "autoMakeup": true,
+      "note": "Compress スライダーはスレッショルドとメイクアップを同時に動かす 1 本の操作です。下の値はスライダーの目盛りではなく、内部のスレッショルドの相当値です。比率と時間はプリセットの固定値で計算します。",
+      "parameters": [
+        { "role": "threshold", "label": "COMPRESS(閾値相当)", "unit": "dB", "min": -40, "max": -6, "step": 1, "confidence": "inferred",
+          "note": "プリセット値は -22dB です。スライダーの可動域は未公表です。" },
+        { "role": "ratio", "label": "RATIO", "unit": ":1", "values": [4.0], "labels": ["4:1"], "fixed": true, "confidence": "verified" },
+        { "role": "attack", "label": "ATTACK", "unit": "ms", "values": [10], "fixed": true, "confidence": "verified" },
+        { "role": "release", "label": "RELEASE", "unit": "ms", "values": [30], "fixed": true, "confidence": "verified" },
+        { "role": "lowCut", "label": "RUMBLE REDUCTION", "unit": "Hz", "values": [0, 60, 80], "labels": ["None", "Low (60Hz)", "High (80Hz)"], "confidence": "verified" }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Vocaster Hub User Guide V1.3", "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/vocaster_hub_user_guide_v1.3_en.pdf" }
+  ]
+}

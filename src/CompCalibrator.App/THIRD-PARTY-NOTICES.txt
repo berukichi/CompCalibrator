@@ -1,0 +1,10 @@
+Comp Calibrator は次のソフトウェアを使用しています。
+
+NAudio
+Copyright 2020 Mark Heath
+MIT License
+https://github.com/naudio/NAudio
+
+Windows App SDK
+Copyright (c) Microsoft Corporation
+https://github.com/microsoft/WindowsAppSDK
