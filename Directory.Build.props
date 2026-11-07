@@ -4,6 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Company>berukichi</Company>
+    <Copyright>Copyright (c) 2026 berukichi</Copyright>
     <Product>Comp Calibrator</Product>
     <Version>0.1.0</Version>
   </PropertyGroup>

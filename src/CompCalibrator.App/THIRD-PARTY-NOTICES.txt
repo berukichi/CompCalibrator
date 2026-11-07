@@ -8,3 +8,12 @@ https://github.com/naudio/NAudio
 Windows App SDK
 Copyright (c) Microsoft Corporation
 https://github.com/microsoft/WindowsAppSDK
+
+GoXLR のプロファイルの数値は、次のプロジェクトの定義を参照しています。
+
+GoXLR Utility
+MIT License
+https://github.com/GoXLR-on-Linux/goxlr-utility
+
+OBS Studio のプロファイルの数値は、公開されたソースコードの設定範囲を参照しています。
+OBS Studio のコードは含んでいません。

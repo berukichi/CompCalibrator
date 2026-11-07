@@ -58,6 +58,12 @@ Microsoft Store に出すときは `Package.appxmanifest` の `Identity` を Par
 
 アイコンは `scripts\make-icons.ps1` で作り直せる。
 
+## ライセンス
+
+[MIT License](LICENSE) で公開している。使用しているライブラリの表記は [THIRD-PARTY-NOTICES.txt](src/CompCalibrator.App/THIRD-PARTY-NOTICES.txt) を参照。
+
+このアプリは各メーカーとは無関係の個人制作物で、メーカーの承認や保証を受けたものではない。製品名は各社の商標または登録商標で、対応機器を示すためにのみ使用している。MIT License は第三者の商標を使う権利を与えるものではない。
+
 ## 構成
 
 | パス | 内容 |
